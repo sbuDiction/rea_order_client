@@ -1,8 +1,12 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import assert from 'assert';
+import Data from './utils/data';
+import StockData from './utils/StockData';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe("Add Shoe Test", function () {
+    it("should be able to display stock available", async function () {
+        const StockInstance = StockData(Data);
+        
+
+        assert.strictEqual(1, 1);
+    });
 });
