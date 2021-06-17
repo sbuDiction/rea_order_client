@@ -1,0 +1,161 @@
+/* .App {
+  text-align: center;
+} */
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.sidebar {
+  /* position:fixed !important; */
+  /* z-index:1 !important; */
+  background-color: rgb(0, 0, 0) !important;
+}
+
+/* .toggleBtn{
+  /* color: red !important; */
+
+/* background-color: #db3d44 !important; */
+
+/* } */
+
+/* .sideNavItem{
+  color: #666 !important;
+} */
+
+body {
+  /* background-color: rgba(22, 21, 21, 0.87) !important; */
+  /* background-image: url(./sneaker.jpeg) !important; */
+  background-repeat: no-repeat !important;
+  background-size: 40% !important;
+  background-position: center !important;
+}
+
+.menu {
+  padding-top: 1% !important;
+}
+
+.history {
+  padding-top: 5% !important;
+  padding-right: 15% !important;
+  /* position: absolute !important; */
+}
+
+.status {
+  padding-left: 35% !important;
+}
+
+.orderBtn {
+  width: 100% !important;
+  height: 100% !important;
+  animation-duration: 2500ms !important;
+  animation-name: af !important;
+  font-size: 18px !important;
+  -webkit-box-pack: center !important;
+  justify-content: center !important;
+  line-height: 24px !important;
+  font-family: "Rubik", sans-serif !important;
+  font-weight: 200 !important;
+  border-radius: .0rem !important;
+  /* font-size: 0.9em !important; */
+}
+
+.hb {
+  margin: 16px 0px !important;
+  background-color: rgb(226, 226, 226) !important;
+  border: none !important;
+  height: 1px !important;
+}
+
+.hs {
+  line-height: 20px !important;
+  font-size: 12px !important;
+  font-family: "Rubik", sans-serif !important;
+  color: rgb(117, 117, 117) !important;
+}
+
+.gr {
+  height: 12px !important;
+}
+
+.d6 {
+  -webkit-box-pack: justify !important;
+  justify-content: space-between !important;
+  line-height: 24px !important;
+  font-size: 14px !important;
+  margin: 8px 0px 4px;
+}
+
+li {
+  display: block !important;
+}
+
+ul {
+  padding: 0 !important;
+  margin: 0 !important;
+  list-style: none !important;
+  display: inline-block !important;
+}
+
+.cc {
+  line-height: 24px !important;
+}
+
+/* .price{ */
+
+/* padding-left: 35% !important; */
+
+/* padding-bottom: 20% !important; */
+
+/* } */
+
+.blg {
+  width: 100% !important;
+  height: 100% !important;
+  font-size: 18px !important;
+  -webkit-box-pack: center !important;
+  justify-content: center !important;
+  line-height: 24px !important;
+  font-family: "Rubik", sans-serif !important;
+  font-weight: 300 !important;
+  font-size: 2.0em !important;
+  color: rgb(117, 117, 117) !important;
+}
+
+.orderHeader {
+  font-family: "Rubik", sans-serif !important;
+  font-weight: 300 !important;
+  font-size: 1.3em !important;
+  
+}
