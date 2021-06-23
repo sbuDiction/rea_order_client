@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "my first socket.io app",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "express": "^4.15.2",
+    "jsonwebtoken": "^8.5.1",
     "nodemon": "^2.0.7",
     "socket.io": "^1.7.3"
   },

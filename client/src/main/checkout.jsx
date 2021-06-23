@@ -12,7 +12,8 @@ export default class StickyExampleActive extends Component {
         super(props)
         this.state = {
             isLoading: false,
-            food_data: []
+            food_data: [],
+            status: 'Your items'
         }
     }
 
@@ -20,27 +21,33 @@ export default class StickyExampleActive extends Component {
         const { food_data } = this.state;
         let params = { food_data };
         socket.emit('add order', params.food_data);
+        this.setState({ food_data: [], status: 'Your order is sent.' });
+        window.localStorage.removeItem('user_order');
     }
 
-    renderOrderButton = () => {
-        const isLoading = this.state.isLoading;
-        return (
-            <Button loading={isLoading} onClick={this.handleOrderButton} className='orderBtn' positive>
-                Place order
-            </Button>
-        );
-    }
+
 
     componentDidMount() {
         socket.emit('initial_data');
         const jsonData = window.localStorage.getItem('user_order');
         const data = JSON.parse(jsonData);
-        this.setState({ food_data: data });
+        chekout.add(data);
+        if (data === null) {
+            this.setState({ status: 'Your cart is empty!', food_data: [] })
+        } else {
+            this.setState({ food_data: data });
+        }
+    }
+
+    componentWillUnmount() {
+        chekout.add(null);
     }
 
     renderOrderInfo = () => {
-        return (
-            <div>
+        const { food_data } = this.state;
+        let content;
+        if (food_data.length !== 0) {
+            content = <div>
                 <div className='infoMsg'>
                     <span className='hs'>If you don't come to pick up your order we will try calling.</span>
                 </div>
@@ -63,6 +70,26 @@ export default class StickyExampleActive extends Component {
                     </div>
                 </div>
             </div>
+        } else {
+            content = '';
+        }
+        return (
+            <div>{content}</div>
+        );
+    }
+
+    renderOrderButton = () => {
+        const { food_data } = this.state;
+        let content;
+        if (food_data.length !== 0) {
+            content = <Button onClick={this.handleOrderButton} className='orderBtn' positive>
+                Place order
+            </Button>
+        } else {
+            content = '';
+        }
+        return (
+            <div>{content}</div>
         );
     }
 
@@ -107,6 +134,7 @@ export default class StickyExampleActive extends Component {
 
 
     render() {
+        const { status } = this.state
         return (
             <Segment basic textAlign='left'>
                 <Grid columns={2} relaxed='very' stackable>
@@ -116,7 +144,7 @@ export default class StickyExampleActive extends Component {
                         </div>
                         <hr className='hb' />
                         <div>
-                            <h3 className=''>Your items</h3>
+                            <h3 className=''>{status}</h3>
                         </div>
                         <div style={{ paddingTop: 15, paddingLeft: 5 }}>
                             {/* {this.renderItems()} */}

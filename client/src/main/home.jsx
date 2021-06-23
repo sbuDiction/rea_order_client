@@ -84,7 +84,6 @@ export default class CardExampleGroupCentered extends React.Component {
     }
 
     async componentDidMount() {
-        
         await axios.get('http://localhost:5000/api/rea_order/all')
             .then(response => {
                 let results = response.data;
@@ -111,7 +110,9 @@ export default class CardExampleGroupCentered extends React.Component {
                     <Button icon circular floated='left' count={counter} price={orderPrice} onClick={this.increament}>
                         <Icon name='plus' />
                     </Button>
+
                     <Button
+                        circular
                         onClick={this.closeModal}
                         content={`Add ${counter} to order R${orderPrice}`}
                         secondary />

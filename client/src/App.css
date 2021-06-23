@@ -102,7 +102,7 @@ body {
   line-height: 20px !important;
   font-size: 12px !important;
   font-family: "Rubik", sans-serif !important;
-  color: rgb(117, 117, 117) !important;
+  color: rgb(255, 255, 255) !important; 
 }
 
 .gr {
@@ -158,4 +158,25 @@ ul {
   font-weight: 300 !important;
   font-size: 1.3em !important;
   
+}
+
+.isState{
+  color: red;
+}
+
+.icon{
+  color: teal;
+}
+
+/* .labeled{
+  color: teal;
+} */
+.placeholder{
+  color: teal;
+  text-decoration: teal;
+}
+
+input{
+  color: teal;
+  text-decoration: teal;
 }

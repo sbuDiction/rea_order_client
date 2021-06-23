@@ -1,12 +1,18 @@
+-- This table is for storing user infomation
 CREATE TABLE users
 (
     id SERIAL PRIMARY KEY,
     name TEXT,
-    username TEXT,
+    last_name TEXT,
+    email TEXT,
+    phone_number TEXT,
+    home_address TEXT,
     password TEXT,
-    admin BOOLEAN
+    admin BOOLEAN,
+    verified BOOLEAN
 );
 
+-- This table is for store the stock 
 CREATE TABLE stock
 (
     id SERIAL PRIMARY KEY,
@@ -16,14 +22,17 @@ CREATE TABLE stock
     qty INTEGER
 );
 
-
+-- This table is for admin used to store orders placed by users
 CREATE TABLE orders
 (
-    id INTEGER,
+    id SERIAL PRIMARY KEY,
+    order_id INTEGER,
     order_name TEXT,
     order_description TEXT,
     order_cost DECIMAL(10,2),
-    count INTEGER
+    count INTEGER,
+    is_done BOOLEAN,
+    TIMESTAMP text
 );
 
 CREATE TABLE logger
@@ -32,4 +41,32 @@ CREATE TABLE logger
     username TEXT,
     event TEXT,
     timestamp TEXT
+);
+
+-- This table is for users to store current active orders
+CREATE TABLE user_orders
+(
+    id SERIAL PRIMARY KEY,
+    orders_table INTEGER REFERENCES stock (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    my_orders INTEGER REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    order_state TEXT,
+    order_cost DECIMAL(10,2),
+    count INTEGER,
+    is_done BOOLEAN,
+    time_stamp TEXT
+);
+
+-- This table is for users used to store finished orders
+CREATE TABLE past_orders
+(
+    id SERIAL PRIMARY KEY,
+    order_id INTEGER,
+    order_name TEXT,
+    order_description TEXT,
+    order_cost DECIMAL(10,2),
+    count INTEGER,
+    is_done BOOLEAN,
+    order_state TEXT,
+    time_stamp TEXT,
+    my_orders INTEGER REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
 );

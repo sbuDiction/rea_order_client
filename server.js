@@ -1,6 +1,4 @@
-// require('dotenv').config();
 const express = require('express');
-// const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const pg = require('pg');
@@ -40,9 +38,9 @@ const io = socketio(server);
 AppSocket(io, dbQueries);
 
 app.get('/api/rea_order/all', rea_order.get);
-app.post('/api/rea_order/get_order', rea_order.getOrder);
-app.post('/api/rea_order/order', rea_order.placeOrder);
-app.get('/api/rea_order/admin/get_orders', rea_order.getOrdersByAdmin);
+app.post('/api/rea_order/get_order', rea_order.order);
+app.post('/api/rea_order/create_account', rea_order.create);
+app.post('/api/rea_order/login', rea_order.login);
 
 server.listen(PORT, () => {
     console.log(`App listening on port ${PORT}!`);

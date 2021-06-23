@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Divider, Segment, Icon, Header, Item, Label, Card, Checkbox } from 'semantic-ui-react'
+import { Divider, Segment, Icon, Header, Item, Checkbox } from 'semantic-ui-react'
 import _ from 'lodash';
 import { socket } from '../global/socket-init';
 
@@ -9,19 +9,17 @@ export default class DividerExampleHorizontal extends React.Component {
         super(props)
         this.state = {
             active: false,
-            accepted: [],
             incoming: [],
-            status: 'No orders!'
+            status: 'No orders!',
         }
     }
 
-    updateAcceptedOrders = (items) => {
-        this.setState((prevState) => ({ accepted: [items, ...prevState.accepted] }))
-    }
 
     getData = foodItems => {
-        console.log(foodItems);
-        this.setState({ incoming: foodItems });
+        if (foodItems.length !== 0) {
+            this.setState({ status: 'New orders received!' });
+            this.setState({ incoming: foodItems });
+        }
     }
 
     changeData = () => socket.emit('ordered_data');
@@ -32,28 +30,31 @@ export default class DividerExampleHorizontal extends React.Component {
         socket.on('change_data', this.changeData);
     }
 
-    acceptOrder = (e, { id }) => {
-        const { incoming } = this.state
+    ready = (e, { ready_id, ready_order }) => {
+        const { incoming } = this.state;
         incoming.forEach(items => {
-            if (id === items.id) {
-                this.updateAcceptedOrders(items);
+            if (ready_id === items.id) {
+                console.log(items);
+                socket.emit('ready for collection', 'Ready to eat', ready_order, true, ready_id);
+                socket.emit('save order', items);
             }
         });
     }
 
-    handleUncheck = () => {
+    accepted = (e, { accept_id, accept_order }) => {
+        const { incoming } = this.state
+        incoming.forEach(order => {
+            if (accept_id === order.id) {
+                let query = {
+                    state: 'Preparing',
+                    orders: order
+                }
+                socket.emit('accepted', query);
+            }
+        });
 
     }
 
-    renderToggleButton = (orderId) => {
-        return (
-            <div>
-                <Button floated='right'>
-                    <Checkbox id={orderId} onClick={this.acceptOrder} label='Accept order' />
-                </Button>
-            </div>
-        );
-    }
 
     renderOrderedItems = () => {
         const { incoming } = this.state;
@@ -70,34 +71,13 @@ export default class DividerExampleHorizontal extends React.Component {
                             </Item.Meta>
                             <Item.Description>Total: R{item.order_cost}</Item.Description>
                             <Item.Extra>
-                                {this.renderToggleButton(item.id)}
-                                <Label size='huge' color='teal'>{item.count}</Label>
-                                {/* <Label icon='globe' content='Additional Languages' /> */}
+                                <Checkbox accept_id={item.id} accept_order={item.order_id} onClick={this.accepted} label='Accept' />
+                                <Checkbox ready_id={item.id} ready_order={item.order_id} onClick={this.ready} label='Done!' />
                             </Item.Extra>
                         </Item.Content>
                     </Item>
                 ))}
             </Item.Group>
-        );
-    }
-
-    renderAcceptedOrders = () => {
-        const { accepted } = this.state
-        return (
-            <Card.Group itemsPerRow={3} stackable centered doubling>
-                {_.map(accepted, (item) => (
-                    <Card href='#' key={item.id} >
-                        <Card.Content>
-                            <Label attached='top right' size='big' color='teal' >{item.count}</Label>
-                            <Card.Header >Order for Sibusiso Nkosi</Card.Header>
-                            <Card.Description>
-                                {item.order_description}
-                            </Card.Description>
-                            {/* <Card.Meta>{item.order_price}</Card.Meta> */}
-                        </Card.Content>
-                    </Card>
-                ))}
-            </Card.Group>
         );
     }
 
@@ -117,20 +97,11 @@ export default class DividerExampleHorizontal extends React.Component {
 
                 </Segment>
                 <div className='items newOrders'>
-                    <pre style={{ height: 127, overflowY: 'scroll' }}>
+                    <pre style={{ height: 250, overflowY: 'scroll' }}>
                         {this.renderOrderedItems()}
                     </pre>
                 </div>
-                <Divider horizontal>
-                    <Header as='h4'>
-                        <Icon color='green' name='check' />
-                        Accepted orders
-                    </Header>
-                </Divider>
-                <div className='acceptedOrders'>
-                    {this.renderAcceptedOrders()}
-                    {/* <Arraytester/> */}
-                </div>
+
             </div>
 
         );

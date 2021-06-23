@@ -2,7 +2,7 @@ import { Component } from 'react';
 import socketIOClient from 'socket.io-client';
 
 let socket;
-class Socket_Connection extends Component {
+class SocketConnection extends Component {
     constructor() {
         super();
         this.state = {
@@ -16,4 +16,4 @@ class Socket_Connection extends Component {
     }
 }
 
-export { Socket_Connection, socket };
+export { SocketConnection, socket };
