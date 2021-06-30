@@ -17,7 +17,7 @@ class AccountSettings extends React.Component {
         'Authorization': `bearer:${Auth.getToken()}`
       }
     }
-    await Axios.get('http://localhost:5000/api/rea_order/user', config)
+    await Axios.get('/api/rea_order/user', config)
       .then(res => {
         this.setState({ user: res.data.data });
       });

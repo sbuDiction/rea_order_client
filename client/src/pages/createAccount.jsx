@@ -34,7 +34,7 @@ class CreateAccount extends React.Component {
         if (confirm_pass_code === pass_code) {
             this.setState({ isMatch: false });
             this.setState({ isLoading: true });
-            await Axios.post('http://localhost:5000/api/rea_order/create_account', params)
+            await Axios.post('/api/rea_order/create_account', params)
                 .then(async res => {
                     let results = res.data;
                     if (results.data) {

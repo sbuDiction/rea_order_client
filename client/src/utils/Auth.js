@@ -12,7 +12,7 @@ const Auth = {
 
         jwt.token = window.localStorage.getItem('token');
         if (jwt.token !== '') {
-            await Axios.post('http://localhost:5000/api/rea_order/verify', jwt)
+            await Axios.post('/api/rea_order/verify', jwt)
                 .then(res => {
                     this.isAuthenticated = res.data.response;
                     this.client_id = res.data.client_id;

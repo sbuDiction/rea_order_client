@@ -22,7 +22,7 @@ export default class MyOrders extends React.Component {
         }
         socket.emit('get orders');
         socket.on('data', async () => {
-            Axios.get('http://localhost:5000/api/rea_order/get/active_order', config)
+            Axios.get('/api/rea_order/get/active_order', config)
                 .then(res => {
                     this.setState({ ordersList: res.data.data });
                 });

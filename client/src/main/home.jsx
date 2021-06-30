@@ -68,7 +68,7 @@ export default class CardExampleGroupCentered extends React.Component {
         const params = { id: id }
         if (id) {
             this.setState({ open: true });
-            await axios.post('http://localhost:5000/api/rea_order/get_order', params)
+            await axios.post('/api/rea_order/get_order', params)
                 .then(res => {
                     let data = res.data.data;
                     calculations.init(Number(data.price), res.data.data.qty);
@@ -144,7 +144,7 @@ export default class CardExampleGroupCentered extends React.Component {
     }
 
     async componentDidMount() {
-        await axios.get('http://localhost:5000/api/rea_order/all')
+        await axios.get('/api/rea_order/all')
             .then(response => {
                 let results = response.data;
                 let data = results.data;

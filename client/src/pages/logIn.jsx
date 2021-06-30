@@ -26,7 +26,7 @@ class Login extends React.Component {
             this.setState({ no_input: true });
         } else {
             this.setState({ no_input: false });
-            await Axios.post('http://localhost:5000/api/rea_order/login', params)
+            await Axios.post('/api/rea_order/login', params)
                 .then(async res => {
                     let results = res.data;
                     if (results.data) {
