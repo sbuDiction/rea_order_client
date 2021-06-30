@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Button, Icon, Input } from 'semantic-ui-react';
+import { Card, Button, Icon, Input, Popup } from 'semantic-ui-react';
 import { Redirect, Link } from 'react-router-dom';
 import Axios from 'axios';
 
@@ -16,7 +16,8 @@ class CreateAccount extends React.Component {
             isLoading: false,
             alert: '',
             redirect: false,
-            isMatch: false
+            isMatch: false,
+            matchFound: false
         }
     }
 
@@ -34,15 +35,17 @@ class CreateAccount extends React.Component {
             this.setState({ isMatch: false });
             this.setState({ isLoading: true });
             await Axios.post('http://localhost:5000/api/rea_order/create_account', params)
-                .then(res => {
+                .then(async res => {
                     let results = res.data;
                     if (results.data) {
+                        const token = await results.token;
+                        window.localStorage.setItem('token', `${token}`)
                         this.setState({ redirect: true });
                         this.setState({ isLoading: false });
                     } else {
                         this.setState({ isLoading: false });
                     }
-                })
+                });
         }
 
 
@@ -50,7 +53,6 @@ class CreateAccount extends React.Component {
 
     handleChange = event => {
         let input = event.target.name;
-        let pass;
         if (input === 'name') {
             this.setState({ name: event.target.value });
         } else if (input === 'surname') {
@@ -62,6 +64,12 @@ class CreateAccount extends React.Component {
         } else if (input === 'password') {
             this.setState({ pass_code: event.target.value });
         } else if (input === 'confirmPassword') {
+            if (event.target.value.length === this.getPasswordLength()) {
+                this.setState({ matchFound: true });
+                this.setState({ isMatch: false });
+            } else if (event.target.value.length !== this.getPasswordLength()) {
+                this.setState({ matchFound: false, isMatch: true });
+            }
             this.setState({ isMatch: true });
             this.setState({ confirm_pass_code: event.target.value });
         }
@@ -71,15 +79,39 @@ class CreateAccount extends React.Component {
 
     }
 
+    getPasswordLength = () => this.state.pass_code.length
+
+
+    renderPopUp = () => {
+        const { isMatch, matchFound } = this.state;
+        let isLoading = isMatch;
+        let color = 'red'
+        if (matchFound) {
+            color = 'green';
+            isLoading = false;
+        } else if (!matchFound) {
+            color = 'red';
+        }
+        return (
+            <Popup
+                content={<>Checking if password's <code>match: <span style={{ color: `${color}` }} >{matchFound.toString().toUpperCase()}</span></code></>}
+                on='click'
+                positionFixed
+                size='mini'
+                trigger={<Input size='mini' placeholder='Confirm password' name='confirmPassword' type='password' onChange={this.handleChange} required autoComplete='new-password' loading={isLoading} />}
+            />
+        )
+    }
+
     render() {
-        const { isLoading, isMatch, redirect } = this.state
+        const { isLoading, redirect } = this.state
         if (redirect) {
             return <Redirect to='/login' />
         }
         return (
             <div>
                 <Card.Group style={{ paddingTop: 110 }} centered>
-                    <Card>
+                    <Card color='teal'>
                         <Card.Content>
                             <Card.Header style={{ paddingLeft: 35, fontFamily: "Rubik, sans-serif", color: 'rgb(117, 117, 117)', fontWeight: 300 }}><Icon name='user' /> Create account</Card.Header>
                             <Card.Description style={{ paddingLeft: 40 }}>
@@ -93,10 +125,10 @@ class CreateAccount extends React.Component {
                                 <div className='gr'></div>
                                 <Input size='mini' placeholder='Password' name='password' type='password' onChange={this.handleChange} required autoComplete='new-password' />
                                 <div className='gr'></div>
-                                <Input size='mini' placeholder='Confirm password' name='confirmPassword' type='password' onChange={this.handleChange} required autoComplete='new-password' loading={isMatch} icon='' />
+                                {this.renderPopUp()}
                                 <div className='gr'></div>
                                 <div style={{ paddingLeft: 30 }}>
-                                    <Button content='Signup' loading={isLoading} circular icon='signup' type='submit' onClick={this.handleSubmit} />
+                                    <Button content='Sign Up' loading={isLoading} circular color='teal' type='submit' onClick={this.handleSubmit} />
                                 </div>
                             </Card.Description>
                         </Card.Content>

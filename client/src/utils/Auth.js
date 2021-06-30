@@ -2,7 +2,7 @@ import Axios from "axios";
 
 const Auth = {
     isAuthenticated: false,
-    isUserName: '',
+    client_id: 0,
     token: '',
 
     async check() {
@@ -10,13 +10,13 @@ const Auth = {
             token: '',
         };
 
-        jwt.token = window.localStorage.getItem('sudo');
+        jwt.token = window.localStorage.getItem('token');
         if (jwt.token !== '') {
-            await Axios.post('rea_order/api/verify', jwt)
+            await Axios.post('http://localhost:5000/api/rea_order/verify', jwt)
                 .then(res => {
                     this.isAuthenticated = res.data.response;
-                    this.isUserName = res.data.response;
-                    this.token = res.data.response;
+                    this.client_id = res.data.client_id;
+                    this.token = res.data.token;
                 })
         }
     },
@@ -27,8 +27,8 @@ const Auth = {
     getAuth() {
         return this.isAuthenticated;
     },
-    getUserName() {
-        return this.isUserName;
+    getClientId() {
+        return this.client_id;
     }
 
 };

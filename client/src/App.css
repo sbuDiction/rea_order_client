@@ -7,6 +7,7 @@
   pointer-events: none;
 }
 
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -14,7 +15,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #282c34 !important;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -60,6 +61,7 @@ body {
   background-repeat: no-repeat !important;
   background-size: 40% !important;
   background-position: center !important;
+  /* background-color: #282c34 !important; */
 }
 
 .menu {
@@ -171,10 +173,6 @@ ul {
 /* .labeled{
   color: teal;
 } */
-.placeholder{
-  color: teal;
-  text-decoration: teal;
-}
 
 input{
   color: teal;

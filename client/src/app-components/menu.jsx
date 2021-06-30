@@ -3,6 +3,7 @@ import { Icon, Label, Menu, Segment } from 'semantic-ui-react';
 import Home from '../main/home';
 import Checkout from '../main/checkout';
 import MyOrders from '../main/orders';
+import AccountSettings from './AccountSettings';
 
 export default class MenuExampleSecondary extends Component {
     state = {
@@ -12,10 +13,6 @@ export default class MenuExampleSecondary extends Component {
 
     handleItemClick = (e, { name }) => {
         this.setState({ activeItem: name })
-    }
-
-    componentDidMount() {
-
     }
 
     renderItems = (active) => {
@@ -31,6 +28,9 @@ export default class MenuExampleSecondary extends Component {
             case 'orders':
                 content = <MyOrders />;
                 break;
+            case 'settings':
+                content = <AccountSettings />;
+                break;
             default:
                 break;
         }
@@ -39,13 +39,12 @@ export default class MenuExampleSecondary extends Component {
         );
     }
 
-
     render() {
         const { activeItem, orderCount } = this.state
         return (
             <div className="outter-section">
-                <Segment inverted>
-                    <Menu inverted pointing secondary attached='top' tabular>
+                <Segment inverted basic>
+                    <Menu inverted pointing secondary borderless stackable>
 
                         <Menu.Menu position='left'>
                             <Menu.Item
@@ -53,7 +52,7 @@ export default class MenuExampleSecondary extends Component {
                                 active={activeItem === 'home'}
                                 onClick={this.handleItemClick}
                             >
-                                <Icon name='home' color='teal' /> Checkout
+                                <Icon name='home' color='teal' /> Home
                             </Menu.Item>
                         </Menu.Menu>
 
@@ -72,6 +71,16 @@ export default class MenuExampleSecondary extends Component {
 
                         <Menu.Menu position='right'>
                             <Menu.Item
+                                name='settings'
+                                active={activeItem === 'settings'}
+                                onClick={this.handleItemClick}
+                            >
+                                <Icon name='settings' color='teal' /> Settings
+                            </Menu.Item>
+                        </Menu.Menu>
+
+                        <Menu.Menu position='right'>
+                            <Menu.Item
                                 name='orders'
                                 active={activeItem === 'orders'}
                                 onClick={this.handleItemClick}
@@ -80,7 +89,6 @@ export default class MenuExampleSecondary extends Component {
                                 <Label circular empty color='teal' floating />
                             </Menu.Item>
                         </Menu.Menu>
-
                     </Menu>
                 </Segment>
                 {this.renderItems(activeItem)}

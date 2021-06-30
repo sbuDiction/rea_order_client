@@ -2,9 +2,6 @@ module.exports = (io, dbQueries) => {
 
     io.on("connection", async socket => {
         socket.on('ordered_data', async () => {
-            const date = new Date();
-            let time = date.getHours() + 2 + ':' + date.getMinutes() + ':' + date.getSeconds();
-            console.log(date);
             let data = await dbQueries.getPlacedOrders();
             io.sockets.emit('get_data', data);
         });
@@ -12,9 +9,11 @@ module.exports = (io, dbQueries) => {
         // listening for new orders placed
         socket.on('add order', async order => {
             order.forEach(async item => {
-                let { id, name, description, price, count } = item;
+                let { id, name, description, price, count, user_id } = item;
                 const isDone = false;
-                await dbQueries.placeOrder(id, name, description, price, count, isDone);
+                const time_stamp = new Date();
+                await dbQueries.placeOrder(id, name, description, price, count, isDone, user_id, time_stamp);
+                await dbQueries.updateStockQty(id, count);
                 io.sockets.emit('change_data');
             });
 
@@ -23,11 +22,7 @@ module.exports = (io, dbQueries) => {
         // sending info about the order that it has been accepted and busy preparing.
         socket.on('accepted', async query => {
             await dbQueries.addToUserOrders(query);
-            let order = await dbQueries.getUserPlacedOrders();
-            let data = {
-                order: order,
-            }
-            io.sockets.emit('data', data);
+            io.sockets.emit('data');
         });
 
         // emit that the order is ready for pick up
@@ -35,21 +30,13 @@ module.exports = (io, dbQueries) => {
             let results = await dbQueries.updateUserOrder(id, msg, isDone);
             const order_id = results[0].id;
             let order = await dbQueries.getReadyOrder(order_id);
-            let data = {
-                order: order,
-            }
-            io.sockets.emit('data', data);
+            io.sockets.emit('data');
         });
 
         // emiting all the user orders
         socket.on('get orders', async () => {
-            let orders = await dbQueries.getPastOrders();
-            let order = await dbQueries.getUserPlacedOrders();
-            let data = {
-                order: order,
-            }
-            io.sockets.emit('data', data);
-            io.sockets.emit('past orders', orders);
+            io.sockets.emit('data');
+            io.sockets.emit('past orders');
         });
 
         // saving the order after it has been finished

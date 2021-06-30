@@ -7,8 +7,8 @@ CREATE TABLE users
     email TEXT,
     phone_number TEXT,
     home_address TEXT,
-    password TEXT,
-    admin BOOLEAN,
+    user_password TEXT,
+    is_admin BOOLEAN,
     verified BOOLEAN
 );
 
@@ -32,7 +32,8 @@ CREATE TABLE orders
     order_cost DECIMAL(10,2),
     count INTEGER,
     is_done BOOLEAN,
-    TIMESTAMP text
+    TIMESTAMP text,
+    whos_order INTEGER REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE logger
