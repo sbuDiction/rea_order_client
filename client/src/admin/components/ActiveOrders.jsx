@@ -14,9 +14,7 @@ export default class DividerExampleHorizontal extends React.Component {
         }
     }
 
-
     getData = foodItems => {
-        console.log(foodItems);
         if (foodItems.length !== 0) {
             this.setState({ status: 'New orders received!' });
             this.setState({ incoming: foodItems });
@@ -25,7 +23,7 @@ export default class DividerExampleHorizontal extends React.Component {
 
     changeData = () => socket.emit('ordered_data');
 
-    async componentDidMount() {
+    componentDidMount() {
         socket.emit('ordered_data');
         socket.on('get_data', this.getData);
         socket.on('change_data', this.changeData);
@@ -42,21 +40,18 @@ export default class DividerExampleHorizontal extends React.Component {
         });
     }
 
-    accepted = (e, { accept_id, accept_order }) => {
-        const { incoming } = this.state
+    accepted = (e, { accept_id }) => {
+        const { incoming } = this.state;
         incoming.forEach(order => {
             if (accept_id === order.id) {
                 let query = {
                     state: 'Preparing',
                     orders: order
-                }
-                console.log(order);
+                };
                 socket.emit('accepted', query);
             }
         });
-
     }
-
 
     renderOrderedItems = () => {
         const { incoming } = this.state;
@@ -65,17 +60,17 @@ export default class DividerExampleHorizontal extends React.Component {
                 {_.map(incoming, (item) => (
                     <Item key={item.id}>
                         <Item.Content>
-                            <h2 style={{ color: 'rgb(117, 117, 117)', fontWeight: 300, fontSize: 30 }}>Order for: <span style={{color:'teal'}}>{item.name + ' ' + item.last_name}</span></h2>
+                            <h2 style={{ color: 'rgb(117, 117, 117)', fontWeight: 300, fontSize: 30 }}>Order for: <span style={{ color: 'teal' }}>{item.name + ' ' + item.last_name}</span></h2>
                             <Item.Header as='a'>{item.order_name}</Item.Header>
                             <Item.Meta>
                                 <span className='cinema'>{item.order_description}</span>
                             </Item.Meta>
                             <Item.Description>Total: R{item.order_cost}</Item.Description>
                             <Item.Meta>
-                                <code>Order id: <span style={{color:'blue'}}>{item.order_id}</span></code>
+                                <code>Order id: <span style={{ color: 'blue' }}>{item.order_id}</span></code>
                             </Item.Meta>
                             <Item.Extra>
-                                <Checkbox name='accept' accept_id={item.id} accept_order={item.order_id} onClick={this.accepted} label='Accept' />
+                                <Checkbox name='accept' accept_id={item.id} onClick={this.accepted} label='Accept' />
                                 <Checkbox name='ready' ready_id={item.id} ready_order={item.order_id} onClick={this.ready} label='Done!' />
                             </Item.Extra>
                         </Item.Content>
@@ -89,25 +84,12 @@ export default class DividerExampleHorizontal extends React.Component {
         return (
             <div>
                 <Segment basic textAlign='center'>
-                    {/* <h1>Rea Order Manager </h1> */}
                     <h3 style={{ color: 'rgb(117, 117, 117)', fontWeight: 300, fontSize: 30 }}>{this.state.status}</h3>
-
-                    {/* <Divider horizontal>
-                        <Header as='h4'>
-                            <Icon name='list ul' />
-                            Incoming orders
-                        </Header>
-                    </Divider> */}
-
                 </Segment>
                 <div className='items newOrders'>
-                    <pre style={{ height: 250, overflowY: 'scroll' }}>
-                        {this.renderOrderedItems()}
-                    </pre>
+                    <pre style={{ height: 250, overflowY: 'scroll' }}>{this.renderOrderedItems()}</pre>
                 </div>
-
             </div>
-
         );
     }
 }

@@ -11,13 +11,16 @@ class ClientTable extends React.Component {
     }
 
     async componentDidMount() {
-        await Axios.get('http://localhost:5000/api/rea_order/users/data')
-            .then(async res => {
-                console.log(res.data);
-                if (res.data.isTrue) {
-                    this.setState({ users: await res.data.data });
-                };
-            });
+        try {
+            await Axios.get('http://localhost:5000/api/rea_order/users/data')
+                .then(async res => {
+                    if (res.data.isTrue) {
+                        this.setState({ users: await res.data.data });
+                    };
+                });
+        } catch (error) {
+
+        };
     }
 
     renderTableItems = () => {
@@ -45,8 +48,6 @@ class ClientTable extends React.Component {
         return (
             <div>
                 <Checkbox label='Filter by verification' />
-                
-                {/* <Checkbox label='Filter by verification' /> */}
                 <Table celled stackable size='small' selectable striped color='blue' inverted compact>
                     <Table.Header>
                         <Table.Row>

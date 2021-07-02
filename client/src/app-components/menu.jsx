@@ -9,11 +9,9 @@ export default class MenuExampleSecondary extends Component {
     state = {
         activeItem: 'home',
         orderCount: 0
-    }
+    };
 
-    handleItemClick = (e, { name }) => {
-        this.setState({ activeItem: name })
-    }
+    handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
     renderItems = (active) => {
         let content;
@@ -22,7 +20,6 @@ export default class MenuExampleSecondary extends Component {
                 content = <Home />;
                 break;
             case 'checkout':
-                // window.location.hash = 'checkout'
                 content = <Checkout />;
                 break;
             case 'orders':
@@ -40,28 +37,19 @@ export default class MenuExampleSecondary extends Component {
     }
 
     render() {
-        const { activeItem, orderCount } = this.state
+        const { activeItem, orderCount } = this.state;
         return (
             <div className="outter-section">
                 <Segment inverted basic>
                     <Menu inverted pointing secondary borderless stackable>
-
                         <Menu.Menu position='left'>
-                            <Menu.Item
-                                name='home'
-                                active={activeItem === 'home'}
-                                onClick={this.handleItemClick}
-                            >
+                            <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick}>
                                 <Icon name='home' color='teal' /> Home
                             </Menu.Item>
                         </Menu.Menu>
 
                         <Menu.Menu position='left'>
-                            <Menu.Item
-                                name='checkout'
-                                active={activeItem === 'checkout'}
-                                onClick={this.handleItemClick}
-                            >
+                            <Menu.Item name='checkout' active={activeItem === 'checkout'} onClick={this.handleItemClick}>
                                 <Icon name='cart' color='teal' /> Checkout
                                 <Label color='teal' floating>
                                     {orderCount}
@@ -70,21 +58,13 @@ export default class MenuExampleSecondary extends Component {
                         </Menu.Menu>
 
                         <Menu.Menu position='right'>
-                            <Menu.Item
-                                name='settings'
-                                active={activeItem === 'settings'}
-                                onClick={this.handleItemClick}
-                            >
+                            <Menu.Item name='settings' active={activeItem === 'settings'} onClick={this.handleItemClick}>
                                 <Icon name='settings' color='teal' /> Settings
                             </Menu.Item>
                         </Menu.Menu>
 
                         <Menu.Menu position='right'>
-                            <Menu.Item
-                                name='orders'
-                                active={activeItem === 'orders'}
-                                onClick={this.handleItemClick}
-                            >
+                            <Menu.Item name='orders' active={activeItem === 'orders'} onClick={this.handleItemClick}>
                                 <Icon name='shopping bag' color='teal' /> My orders
                                 <Label circular empty color='teal' floating />
                             </Menu.Item>
@@ -93,6 +73,6 @@ export default class MenuExampleSecondary extends Component {
                 </Segment>
                 {this.renderItems(activeItem)}
             </div>
-        )
+        );
     }
 }

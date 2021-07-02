@@ -61,25 +61,29 @@ export default class CardExampleGroupCentered extends React.Component {
             orderPrice: '',
             out_of_stock: false,
             visble: false
-        }
+        };
     }
 
     handleOrders = async (e, { id }) => {
-        const params = { id: id }
-        if (id) {
-            this.setState({ open: true });
-            await axios.post('/api/rea_order/get_order', params)
-                .then(res => {
-                    let data = res.data.data;
-                    calculations.init(Number(data.price), res.data.data.qty);
-                    this.setState({
-                        orders: [data],
-                        orderId: data.id,
-                        orderName: data.name,
-                        orderDescription: data.item_description,
-                        orderPrice: calculations.getPriceTotal().toFixed(2),
-                    })
-                })
+        try {
+            const params = { id: id };
+            if (id) {
+                this.setState({ open: true });
+                await axios.post('/api/rea_order/get_order', params)
+                    .then(res => {
+                        let data = res.data.data;
+                        calculations.init(Number(data.price), res.data.data.qty);
+                        this.setState({
+                            orders: [data],
+                            orderId: data.id,
+                            orderName: data.name,
+                            orderDescription: data.item_description,
+                            orderPrice: calculations.getPriceTotal().toFixed(2),
+                        });
+                    });
+            };
+        } catch (error) {
+
         }
     }
 
@@ -130,10 +134,10 @@ export default class CardExampleGroupCentered extends React.Component {
         });
         if (total === 1) {
             this.setState({ isDisabled: true });
-        }
+        };
         if (qty !== 0) {
             this.setState({ out_of_stock: false, visble: false });
-        }
+        };
     }
 
     cancelOrder = () => {
@@ -144,12 +148,16 @@ export default class CardExampleGroupCentered extends React.Component {
     }
 
     async componentDidMount() {
-        await axios.get('/api/rea_order/all')
-            .then(response => {
-                let results = response.data;
-                let data = results.data;
-                this.setState({ items: data });
-            })
+        try {
+            await axios.get('/api/rea_order/all')
+                .then(response => {
+                    let results = response.data;
+                    let data = results.data;
+                    this.setState({ items: data });
+                });
+        } catch (error) {
+
+        };
     }
 
     handleFilter = event => {

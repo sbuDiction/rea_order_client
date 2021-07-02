@@ -14,7 +14,7 @@ export default class StickyExampleActive extends Component {
             isLoading: false,
             food_data: [],
             status: 'Your items'
-        }
+        };
     }
 
     handleOrderButton = () => {
@@ -25,15 +25,13 @@ export default class StickyExampleActive extends Component {
         window.localStorage.removeItem('user_order');
     }
 
-
-
     componentDidMount() {
         socket.emit('initial_data');
         const jsonData = window.localStorage.getItem('user_order');
         const data = JSON.parse(jsonData);
         chekout.add(data);
         if (data === null) {
-            this.setState({ status: 'Your cart is empty!', food_data: [] })
+            this.setState({ status: 'Your cart is empty!', food_data: [] });
         } else {
             this.setState({ food_data: data });
         }
@@ -132,20 +130,15 @@ export default class StickyExampleActive extends Component {
         );
     }
 
-
     render() {
         const { status } = this.state
         return (
             <Segment basic textAlign='left'>
                 <Grid columns={2} relaxed='very' stackable>
                     <Grid.Column>
-                        <div>
-                            <h1 className='blg'>Kota House, Vosloorus</h1>
-                        </div>
+                        <div><h1 className='blg'>Kota House, Vosloorus</h1></div>
                         <hr className='hb' />
-                        <div>
-                            <h3 className=''>{status}</h3>
-                        </div>
+                        <div><h3 className=''>{status}</h3></div>
                         <div style={{ paddingTop: 15, paddingLeft: 5 }}>
                             {/* {this.renderItems()} */}
                             {this.renderOrderList()}

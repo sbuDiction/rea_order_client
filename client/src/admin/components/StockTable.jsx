@@ -7,16 +7,20 @@ class StockTable extends React.Component {
         super();
         this.state = {
             stock: [],
-        }
+        };
     }
 
     async componentDidMount() {
-        await Axios.get('http://localhost:5000/api/rea_order/all')
-            .then(res => {
-                if (res.data.isTrue) {
-                    this.setState({ stock: res.data.data });
-                }
-            });
+        try {
+            await Axios.get('http://localhost:5000/api/rea_order/all')
+                .then(res => {
+                    if (res.data.isTrue) {
+                        this.setState({ stock: res.data.data });
+                    };
+                });
+        } catch (error) {
+
+        };
     }
 
     renderTableItems = () => {

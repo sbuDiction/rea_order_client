@@ -17,25 +17,29 @@ class Login extends React.Component {
     }
 
     handleLogin = async () => {
-        const { email_address, pass_code } = this.state;
-        const params = {
-            input_password: pass_code,
-            input_email: email_address
-        };
-        if (params.input_email === '' || params.input_password === '') {
-            this.setState({ no_input: true });
-        } else {
-            this.setState({ no_input: false });
-            await Axios.post('/api/rea_order/login', params)
-                .then(async res => {
-                    let results = res.data;
-                    if (results.data) {
-                        window.localStorage.setItem('token', `${results.token}`);
-                        await Auth.check();
-                        this.setState({ redirect: true });
-                        this.setState({ isLoading: true });
-                    }
-                })
+        try {
+            const { email_address, pass_code } = this.state;
+            const params = {
+                input_password: pass_code,
+                input_email: email_address
+            };
+            if (params.input_email === '' || params.input_password === '') {
+                this.setState({ no_input: true });
+            } else {
+                this.setState({ no_input: false });
+                await Axios.post('/api/rea_order/login', params)
+                    .then(async res => {
+                        let results = res.data;
+                        if (results.data) {
+                            window.localStorage.setItem('token', `${results.token}`);
+                            await Auth.check();
+                            this.setState({ redirect: true });
+                            this.setState({ isLoading: true });
+                        };
+                    });
+            };
+        } catch (error) {
+
         }
     }
 
@@ -96,7 +100,6 @@ class Login extends React.Component {
                         </Card.Content>
                     </Card>
                 </Card.Group>
-
             </div>
         );
     }
@@ -105,7 +108,7 @@ class Login extends React.Component {
         const { redirect } = this.state;
         let content;
         if (redirect) {
-            return <Redirect to='/app' />
+            return <Redirect to='/app' />;
         }
 
         if (Auth.getAuth()) {

@@ -8,7 +8,7 @@ class AccountSettings extends React.Component {
     super()
     this.state = {
       user: []
-    }
+    };
   }
 
   async componentDidMount() {
@@ -16,11 +16,15 @@ class AccountSettings extends React.Component {
       headers: {
         'Authorization': `bearer:${Auth.getToken()}`
       }
-    }
-    await Axios.get('/api/rea_order/user', config)
-      .then(res => {
-        this.setState({ user: res.data.data });
-      });
+    };
+    try {
+      await Axios.get('/api/rea_order/user', config)
+        .then(res => {
+          this.setState({ user: res.data.data });
+        });
+    } catch (error) {
+
+    };
   }
 
   render() {
@@ -34,48 +38,20 @@ class AccountSettings extends React.Component {
           </Header.Subheader>
         </Header>
         <Segment stacked color='teal' raised tertiary compact>
-          <Label as='a' color='orange' ribbon='right' icon='power off' size='medium' content='Logout' /> 
+          <Label as='a' color='orange' ribbon='right' icon='power off' size='medium' content='Logout' />
           <Grid columns={2} relaxed='very' stackable>
             <Grid.Column>
               <Form>
-                <Form.Input
-                  icon='user'
-                  iconPosition='left'
-                  label='Username'
-                  placeholder={user.name}
-                />
-                <Form.Input
-                  icon='user'
-                  iconPosition='left'
-                  label='Surname'
-                  placeholder={user.last_name}
-                />
-                <Form.Input
-                  icon='mail'
-                  iconPosition='left'
-                  label='Email'
-                  placeholder={user.email}
-                  type='email'
-                />
-                <Form.Input
-                  icon='map marker alternate'
-                  iconPosition='left'
-                  label='Home address'
-                  placeholder={user.home_address}
-                />
-
-                {/* <Button content='Login' primary /> */}
+                <Form.Input icon='user' iconPosition='left' label='Username' placeholder={user.name} />
+                <Form.Input icon='user' iconPosition='left' label='Surname' placeholder={user.last_name}/>
+                <Form.Input icon='mail' iconPosition='left' label='Email' placeholder={user.email} type='email'/>
+                <Form.Input icon='map marker alternate' iconPosition='left' label='Home address' placeholder={user.home_address}/>
               </Form>
             </Grid.Column>
-
             <Grid.Column verticalAlign='middle'>
-              <Form>
-              </Form>
               <Button content='Update account' icon='edit' size='big' color='teal' basic />
             </Grid.Column>
           </Grid>
-
-          {/* <Divider vertical>Or</Divider> */}
         </Segment>
       </div>
     );

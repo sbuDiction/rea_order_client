@@ -22,30 +22,30 @@ class CreateAccount extends React.Component {
     }
 
     handleSubmit = async event => {
-        const { name, last_name, pass_code, confirm_pass_code, email_address, phone_number } = this.state
-        const params = {
-            input_name: name,
-            input_surname: last_name,
-            input_password: pass_code,
-            input_email: email_address,
-            input_phone: phone_number
-        };
+        try {
+            const { name, last_name, pass_code, confirm_pass_code, email_address, phone_number } = this.state
+            const params = {
+                input_name: name, input_surname: last_name, input_password: pass_code, input_email: email_address, input_phone: phone_number
+            };
 
-        if (confirm_pass_code === pass_code) {
-            this.setState({ isMatch: false });
-            this.setState({ isLoading: true });
-            await Axios.post('/api/rea_order/create_account', params)
-                .then(async res => {
-                    let results = res.data;
-                    if (results.data) {
-                        const token = await results.token;
-                        window.localStorage.setItem('token', `${token}`)
-                        this.setState({ redirect: true });
-                        this.setState({ isLoading: false });
-                    } else {
-                        this.setState({ isLoading: false });
-                    }
-                });
+            if (confirm_pass_code === pass_code) {
+                this.setState({ isMatch: false });
+                this.setState({ isLoading: true });
+                await Axios.post('/api/rea_order/create_account', params)
+                    .then(async res => {
+                        let results = res.data;
+                        if (results.data) {
+                            const token = await results.token;
+                            window.localStorage.setItem('token', `${token}`)
+                            this.setState({ redirect: true });
+                            this.setState({ isLoading: false });
+                        } else {
+                            this.setState({ isLoading: false });
+                        }
+                    });
+            }
+        } catch (error) {
+
         }
 
 
@@ -75,12 +75,7 @@ class CreateAccount extends React.Component {
         }
     }
 
-    handleRedirect = () => {
-
-    }
-
     getPasswordLength = () => this.state.pass_code.length
-
 
     renderPopUp = () => {
         const { isMatch, matchFound } = this.state;
@@ -93,13 +88,11 @@ class CreateAccount extends React.Component {
             color = 'red';
         }
         return (
-            <Popup
-                content={<>Checking if password's <code>match: <span style={{ color: `${color}` }} >{matchFound.toString().toUpperCase()}</span></code></>}
+            <Popup content={<>Checking if password's <code>match: <span style={{ color: `${color}` }} >{matchFound.toString().toUpperCase()}</span></code></>}
                 on='click'
                 positionFixed
                 size='mini'
-                trigger={<Input size='mini' placeholder='Confirm password' name='confirmPassword' type='password' onChange={this.handleChange} required autoComplete='new-password' loading={isLoading} />}
-            />
+                trigger={<Input size='mini' placeholder='Confirm password' name='confirmPassword' type='password' onChange={this.handleChange} required autoComplete='new-password' loading={isLoading} />} />
         )
     }
 

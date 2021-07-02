@@ -1,15 +1,6 @@
 import React, { Component } from 'react';
-import {
-    Checkbox,
-    Form,
-    Input,
-    Radio,
-    TextArea,
-    Button,
-    Message
-} from 'semantic-ui-react';
+import { Checkbox, Form, Input, Radio, TextArea, Button, Message } from 'semantic-ui-react';
 import Axios from 'axios';
-
 
 class UpdateStockForm extends Component {
     constructor() {
@@ -21,13 +12,10 @@ class UpdateStockForm extends Component {
             price: 0,
             isNew: false,
             message: ''
-        }
+        };
     }
 
-    handleChange = (e, { qty }) => {
-        console.log(qty);
-        this.setState({ qty: Number(qty) });
-    }
+    handleChange = (e, { qty }) => this.setState({ qty: Number(qty) });
 
     handleInputChange = event => {
         let input = event.target.name;
@@ -37,29 +25,31 @@ class UpdateStockForm extends Component {
             this.setState({ price: Number(event.target.value) });
         } else if (input === 'description') {
             this.setState({ description: event.target.value });
-        }
+        };
     }
 
     handleAddButton = async () => {
-        const { qty, name, description, price } = this.state;
-        const params = {
-            qty, name, description, price
-        }
-        await Axios.post('http://localhost:5000/api/rea_order/add/stock', params)
-            .then(res => {
-                console.log(res.data.status);
-                this.setState({ message: res.data.status });
-            })
+        try {
+            const { qty, name, description, price } = this.state;
+            const params = { qty, name, description, price };
+            await Axios.post('http://localhost:5000/api/rea_order/add/stock', params)
+                .then(res => {
+                    this.setState({ message: res.data.status });
+                });
+        } catch (error) {
+
+        };
     }
 
     render() {
-        const { qty, message } = this.state
+        const { qty, message } = this.state;
         let content;
         if (message === 'Stock was successfuly updated.') {
-            content = <Message success header={message} content='You can now update the quantity of this meal in stock' />
+            content = <Message success header={message} content='You can now update the quantity of this meal in stock' />;
         } else if (message === 'Stock quantity successfuly updated.') {
-            content = <Message success header={message} content='You can now update the quantity of this meal in stock' />
-        }
+            content = <Message success header={message} content='You can now update the quantity of this meal in stock' />;
+        };
+        
         return (
             <div>
                 {content}

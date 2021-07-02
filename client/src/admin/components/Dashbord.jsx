@@ -11,61 +11,54 @@ class Dashbord extends Component {
         this.state = {
             activeItem: 'Stock',
             open: false
-        }
+        };
+    };
 
-    }
 
+    handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
-    handleItemClick = (e, { name }) => {
-        this.setState({ activeItem: name });
-    }
+    open = () => this.setState({ open: true });
 
-    open = () => {
-        this.setState({ open: true });
-    }
-
-    close = () => {
-        this.setState({ open: false });
-    }
+    close = () => this.setState({ open: false });
 
     renderHtmlContent = (active) => {
         let content;
         switch (active) {
             case 'Stock':
-                content = <StockTable />
+                content = <StockTable />;
                 break;
             case 'Available stock':
-                content = ''
+                content = '';
                 break;
             case 'Active orders':
-                content = <ActiveOrders />
+                content = <ActiveOrders />;
                 break;
             case 'Finished orders':
-                content = ''
+                content = '';
                 break;
             case 'Users':
-                content = <ClientTable />
+                content = <ClientTable />;
                 break;
             case 'Connected users':
-                content = ''
+                content = '';
                 break;
             case 'Verified users':
-                content = ''
+                content = '';
                 break;
             case 'Profit':
-                content = ''
+                content = '';
                 break;
             case 'Cash':
-                content = ''
+                content = '';
                 break;
             case 'Bought':
-                content = ''
+                content = '';
                 break;
             case 'Admin profile':
-                content = ''
+                content = '';
                 break;
             case 'App settings':
-                content = ''
+                content = '';
                 break;
             default:
                 break;
@@ -131,16 +124,11 @@ class Dashbord extends Component {
         return (
             <Modal open={open}>
                 <Modal.Header>Add stock</Modal.Header>
-                <Modal.Content scrolling>
-                    <UpdateStockForm />
-                </Modal.Content>
-                <Modal.Actions>
-                    <Button secondary floated='right' compact onClick={this.close} labelPosition='right' icon='x' content='Close' />
-                </Modal.Actions>
+                <Modal.Content scrolling><UpdateStockForm /></Modal.Content>
+                <Modal.Actions><Button secondary floated='right' compact onClick={this.close} labelPosition='right' icon='x' content='Close' /></Modal.Actions>
             </Modal>
         );
     }
-
 
     render() {
         const { activeItem } = this.state;

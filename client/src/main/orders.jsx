@@ -15,18 +15,22 @@ export default class MyOrders extends React.Component {
     }
 
     componentDidMount() {
-        let config = {
-            headers: {
-                'Authorization': `bearer:${Auth.getToken()}`
+        try {
+            let config = {
+                headers: {
+                    'Authorization': `bearer:${Auth.getToken()}`
+                }
             }
+            socket.emit('get orders');
+            socket.on('data', async () => {
+                Axios.get('/api/rea_order/get/active_order', config)
+                    .then(res => {
+                        this.setState({ ordersList: res.data.data });
+                    });
+            });
+        } catch (error) {
+
         }
-        socket.emit('get orders');
-        socket.on('data', async () => {
-            Axios.get('/api/rea_order/get/active_order', config)
-                .then(res => {
-                    this.setState({ ordersList: res.data.data });
-                });
-        });
     }
 
     renderActiveCardOrders() {
