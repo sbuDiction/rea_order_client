@@ -33,6 +33,7 @@ class CreateAccount extends React.Component {
                 this.setState({ isLoading: true });
                 await Axios.post('/api/rea_order/create_account', params)
                     .then(async res => {
+                        console.log(res.data);
                         let results = res.data;
                         if (results.data) {
                             const token = await results.token;
@@ -45,7 +46,7 @@ class CreateAccount extends React.Component {
                     });
             }
         } catch (error) {
-
+            console.log(error);
         }
 
 

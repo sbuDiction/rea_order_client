@@ -61,7 +61,9 @@ module.exports = (dbQueries, tokenHandler) => {
 
             };
         } catch (error) {
-
+            res.json({
+                status:'something went wrong'
+            })
         };
     }
 
