@@ -77,7 +77,8 @@ module.exports = (dbQueries, tokenHandler) => {
                 });
             } else {
                 let userData = await dbQueries.signIn(input_email);
-                bcrypt.compare(input_password, userData.password, (err, results) => {
+                console.log(userData);
+                bcrypt.compare(input_password, userData.user_password, (err, results) => {
                     const token = tokenHandler.access(userData.id);
                     console.log(token);
                     if (results) {
