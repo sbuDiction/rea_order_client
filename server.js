@@ -21,7 +21,7 @@ if (process.env.DATABASE_URL && !local) {
 }
 
 const connectionString = process.env.DATABASE_URL || "postgresql://diction:root@localhost:5432/rea_order";
-const pool = new Pool({ connectionString, ssl: useSSL });
+const pool = new Pool({ connectionString, ssl: { rejectUnauthorized: false } });
 
 
 
