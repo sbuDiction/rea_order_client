@@ -125,14 +125,14 @@ module.exports = (pool) => {
         let accounts = [];
         let check = await pool.query(`SELECT email, phone_number FROM users WHERE email = $1 AND phone_number = $2`, [input_email, input_phone]);
         if (check.rows.length === 0) {
-            let accountId = await pool.query(`INSERT INTO users (name, last_name, email, phone_number, password, admin, verified) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`, user);
+            let accountId = await pool.query(`INSERT INTO users (name, last_name, email, phone_number, user_password, is_admin, verified) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`, user);
             accounts.push(accountId.rows[0]);
         }
         return accounts;
     }
 
     const signIn = async (input_email) => {
-        let check = await pool.query(`SELECT email, password, id FROM users WHERE email = $1`, [input_email]);
+        let check = await pool.query(`SELECT email, user_password, id FROM users WHERE email = $1`, [input_email]);
         return check.rows[0];
     }
 
