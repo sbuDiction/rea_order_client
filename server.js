@@ -14,7 +14,6 @@ const app = express();
 
 
 const { Pool } = pg;
-let useSSL = false;
 const local = process.env.LOCAL || false;
 if (process.env.DATABASE_URL && !local) {
     useSSL = true;
