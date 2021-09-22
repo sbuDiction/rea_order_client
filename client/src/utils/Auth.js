@@ -11,9 +11,13 @@ const Auth = {
                 token: '',
             };
             jwt.token = window.localStorage.getItem('token');
+            const getToken = window.localStorage.getItem('token');
+            console.log(jwt.token !== '');
+            console.log(getToken + " getting token");
             if (jwt.token !== '') {
                 await Axios.post('/api/rea_order/verify', jwt)
                     .then(res => {
+                        console.log(res);
                         this.isAuthenticated = res.data.response;
                         this.client_id = res.data.client_id;
                         this.token = res.data.token;
