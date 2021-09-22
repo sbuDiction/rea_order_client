@@ -12,7 +12,7 @@ class StockTable extends React.Component {
 
     async componentDidMount() {
         try {
-            await Axios.get('http://localhost:5000/api/rea_order/all')
+            await Axios.get('/api/rea_order/all')
                 .then(res => {
                     if (res.data.isTrue) {
                         this.setState({ stock: res.data.data });

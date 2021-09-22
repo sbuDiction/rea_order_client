@@ -32,7 +32,7 @@ class UpdateStockForm extends Component {
         try {
             const { qty, name, description, price } = this.state;
             const params = { qty, name, description, price };
-            await Axios.post('http://localhost:5000/api/rea_order/add/stock', params)
+            await Axios.post('/api/rea_order/add/stock', params)
                 .then(res => {
                     this.setState({ message: res.data.status });
                 });
