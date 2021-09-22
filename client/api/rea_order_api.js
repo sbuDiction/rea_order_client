@@ -62,7 +62,7 @@ module.exports = (dbQueries, tokenHandler) => {
             };
         } catch (error) {
             res.json({
-                status:'something went wrong'
+                status: 'something went wrong'
             })
         };
     }
@@ -75,25 +75,31 @@ module.exports = (dbQueries, tokenHandler) => {
                     status: 'No input was provided!',
                     data: false,
                 });
-            } else  {
                 let userData = await dbQueries.signIn(input_email);
-                console.log(userData);
-                bcrypt.compare(input_password, userData.user_password, (err, results) => {
-                    const token = tokenHandler.access(userData.id);
-                    console.log(token + ' login token');
-                    if (results) {
-                        res.json({
-                            status: 'success',
-                            data: results,
-                            token: token
-                        });
-                    } else {
-                        res.json({
-                            status: 'Password is incorrect',
-                            data: results,
-                        });
-                    }
-                })
+                if (userData.length !== 0) {
+                    console.log(userData);
+                    bcrypt.compare(input_password, userData.user_password, (err, results) => {
+                        const token = tokenHandler.access(userData.id);
+                        console.log(token + ' login token');
+                        if (results) {
+                            res.json({
+                                status: 'success',
+                                data: results,
+                                token: token
+                            });
+                        } else {
+                            res.json({
+                                status: 'Password is incorrect',
+                                data: results,
+                            });
+                        }
+                    });
+                } else {
+                    res.json({
+                        status: 'Account doesnt exist',
+                    });
+                }
+
             }
         } catch (error) {
             console.log(error);

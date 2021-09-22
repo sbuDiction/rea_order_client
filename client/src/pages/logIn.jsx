@@ -29,13 +29,18 @@ class Login extends React.Component {
                 this.setState({ no_input: false });
                 await Axios.post('/api/rea_order/login', params)
                     .then(async res => {
-                        let results = res.data;
-                        if (results.data) {
-                            window.localStorage.setItem('token', `${results.token}`);
-                            await Auth.check();
-                            this.setState({ redirect: true });
-                            this.setState({ isLoading: true });
-                        };
+                        if (res.data.status === 'Account doesnt exist') {
+                            console.log(res.data.status);
+                        } else {
+                            let results = res.data;
+                            if (results.data) {
+                                window.localStorage.setItem('token', `${results.token}`);
+                                await Auth.check();
+                                this.setState({ redirect: true });
+                                this.setState({ isLoading: true });
+                            };
+                        }
+
                     });
             };
         } catch (error) {
