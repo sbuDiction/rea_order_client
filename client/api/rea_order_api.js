@@ -70,11 +70,12 @@ module.exports = (dbQueries, tokenHandler) => {
     const login = async (req, res) => {
         const { input_password, input_email } = req.body;
         try {
-            if (input_password === '' | input_email === '') {
+            if (input_password === '' && input_email === '') {
                 res.json({
                     status: 'No input was provided!',
                     data: false,
                 });
+            } else {
                 let userData = await dbQueries.signIn(input_email);
                 if (userData.length !== 0) {
                     console.log(userData);
@@ -97,9 +98,9 @@ module.exports = (dbQueries, tokenHandler) => {
                 } else {
                     res.json({
                         status: 'Account doesnt exist',
+                        data: false
                     });
                 }
-
             }
         } catch (error) {
             console.log(error);
