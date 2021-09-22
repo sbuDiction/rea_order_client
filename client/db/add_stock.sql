@@ -1,0 +1,1 @@
+insert into stock (id, name, item_description, price, qty) values (1,)
