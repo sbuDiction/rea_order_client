@@ -9,10 +9,9 @@ module.exports = (req, res, next) => {
             let bearer = header.split(':');
             const { data } = jwt.verify(bearer[1], config.TOKEN_SECRET);
             req.id = data;
-            
             next()
         }
     } catch (error) {
-
+        console.log(error);
     }
 }
