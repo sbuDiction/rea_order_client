@@ -1,1 +1,10 @@
-insert into stock (id, name, item_description, price, qty) values (1,)
+insert into stock (id, name, item_description, price, qty) values (1, 'Kota Small', 'Chips, Polony & Full Vienna.', 10.00, 10);
+insert into stock (id, name, item_description, price, qty) values (2, 'Kota Small Meal With Special', 'Chips, Polony, Full Vienna & Special.', 12.00, 10);
+insert into stock (id, name, item_description, price, qty) values (3, 'Kota Medium', 'Chips, Polony, Half Russian & Half Vienna.', 15.00, 10);
+insert into stock (id, name, item_description, price, qty) values (4, 'Kota Medium Meal', 'Chips, Polony, Lettuce, Burger & Cheese.', 19.00, 10);
+insert into stock (id, name, item_description, price, qty) values (5, 'Kota Mediun Meal With Special', 'Chips, Polony, Full Russian, Special & Cheese.', 20.00, 10);
+insert into stock (id, name, item_description, price, qty) values (6, 'Kota Large Meal', 'Chips, Polony, Full Russian, Full Vienna & Cheese.', 22.00, 10);
+insert into stock (id, name, item_description, price, qty) values (7, 'Kota Extra Large With Special', 'Chips, Polony, Lettuce, Full Russian, Full Vienna, Special & Cheese.', 25.00, 10);
+insert into stock (id, name, item_description, price, qty) values (8, 'Dagwood small', 'Chips, Polony, Burger, Lettuce, Onion, Tomato & Cheese.', 20.00, 10);
+insert into stock (id, name, item_description, price, qty) values (9, 'Dagwood Medium Meal', 'Chips, Polony, Burger, Lettuce, Onion, Tomato, Cheese & Egg.', 23.00, 10);
+insert into stock (id, name, item_description, price, qty) values (10, 'Dagwood Large Meal', 'Chips, Polony, Burger, Lettuce, Onion, Tomato, Cheese, Egg & Special.', 27.00, 10);
