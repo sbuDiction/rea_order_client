@@ -133,6 +133,7 @@ module.exports = (pool) => {
 
     const signIn = async (input_email) => {
         let check = await pool.query(`SELECT email, user_password, id FROM users WHERE email = $1`, [input_email]);
+        console.log(check.rows);
         return check.rows[0];
     }
 

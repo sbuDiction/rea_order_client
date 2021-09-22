@@ -75,12 +75,12 @@ module.exports = (dbQueries, tokenHandler) => {
                     status: 'No input was provided!',
                     data: false,
                 });
-            } else {
+            } else  {
                 let userData = await dbQueries.signIn(input_email);
                 console.log(userData);
                 bcrypt.compare(input_password, userData.user_password, (err, results) => {
                     const token = tokenHandler.access(userData.id);
-                    console.log(token);
+                    console.log(token + ' login token');
                     if (results) {
                         res.json({
                             status: 'success',
