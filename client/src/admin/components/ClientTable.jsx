@@ -12,7 +12,7 @@ class ClientTable extends React.Component {
 
     async componentDidMount() {
         try {
-            await Axios.get('http://localhost:5000/api/rea_order/users/data')
+            await Axios.get('/api/rea_order/users/data')
                 .then(async res => {
                     if (res.data.isTrue) {
                         this.setState({ users: await res.data.data });
