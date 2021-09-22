@@ -104,8 +104,9 @@ module.exports = (dbQueries, tokenHandler) => {
     const verify = async (req, res) => {
         try {
             const { token } = req.body;
-            console.log(token);
+            console.log(token + ' token');
             if (token) {
+                console.log('token check is true');
                 let verified = tokenHandler.verifyToken(token);
                 res.json({
                     status: 'Token verified',
