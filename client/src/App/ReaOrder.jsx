@@ -1,11 +1,11 @@
 import React from 'react';
-import Menu from '../app-components/menu';
+import Navigation from '../app-components/Navigation';
 
 
 export default class ReaOrder extends React.Component {
     render() {
         return (
-            <div className='container'><Menu /></div>
+            <div className='container'><Navigation /></div>
         );
     };
 };

@@ -7,7 +7,7 @@ const Checkout = require('../functions/Checkout');
 
 
 const chekout = Checkout();
-export default class StickyExampleActive extends Component {
+export default class Carts extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -136,7 +136,7 @@ export default class StickyExampleActive extends Component {
             <Segment basic textAlign='left'>
                 <Grid columns={2} relaxed='very' stackable>
                     <Grid.Column>
-                        <div><h1 className='blg'>Kota House, Vosloorus</h1></div>
+                        <div><h1 className='blg'>Ngwane's, Vosloorus</h1></div>
                         <hr className='hb' />
                         <div><h3 className=''>{status}</h3></div>
                         <div style={{ paddingTop: 15, paddingLeft: 5 }}>

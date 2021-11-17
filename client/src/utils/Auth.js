@@ -33,6 +33,7 @@ const Auth = {
     },
     getAuth() {
         return this.isAuthenticated;
+        // return true
     },
     getClientId() {
         return this.client_id;

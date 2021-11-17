@@ -1,51 +1,13 @@
 import React from 'react';
 import Auth from '../utils/Auth';
-import { Card, Button, Modal, Icon, Message, Label, Segment, Dropdown, Advertisement } from 'semantic-ui-react';
+import { Card, Button, Modal, Icon, Message } from 'semantic-ui-react';
 import axios from 'axios';
 const Calculations = require('../functions/Calculations');
 const PlaceOrders = require('../functions/PlaceOrders');
 
 const calculations = Calculations();
 const placeOrder = PlaceOrders();
-const optionsList = [
-    {
-        key: 'Kota',
-        text: 'Kota',
-        value: 'Kota',
-        label: { color: 'red', empty: true, circular: true },
-    },
-    {
-        key: 'Dagwood',
-        text: 'Dagwood',
-        value: 'Dagwood',
-        label: { color: 'blue', empty: true, circular: true },
-    },
-    {
-        key: 'Large meals',
-        text: 'Large meals',
-        value: 'Large meals',
-        label: { circular: true, icon: 'food' },
-    },
-    {
-        key: 'Small meals',
-        text: 'Small meals',
-        value: 'Small meals',
-        label: { circular: true, icon: 'food' },
-    },
-    {
-        key: 'Low price',
-        text: 'Low price',
-        value: 'Low price',
-        label: { circular: true, icon: 'money bill alternate' },
-    },
-    {
-        key: 'High price',
-        text: 'High price',
-        value: 'High price',
-        label: { circular: true, icon: 'money bill alternate' },
-    },
-]
-export default class CardExampleGroupCentered extends React.Component {
+export default class Home extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -198,15 +160,7 @@ export default class CardExampleGroupCentered extends React.Component {
         const { items } = this.state;
         return (
             <div>
-                <Segment.Group horizontal size='small'>
-                    <Segment inverted color='teal'><p style={{ fontWeight: 300, fontSize: 20 }}>Food menu <Icon name='food' size='small' /></p></Segment>
-                    <Segment inverted color='teal'>
-                        <Dropdown text='Filter food menu' icon='filter' options={optionsList} fluid multiple selection name='filter' compact onChange={this.handleFilter} />
-                    </Segment>
-                    {/* <Segment inverted color='teal'>Bottom</Segment> */}
-                </Segment.Group>
-                <hr className='hb' />
-                {/* <Advertisement unit='panorama' test='Advertisement' centered /> */}
+                {/* <hr className='hb' /> */}
                 <Card.Group itemsPerRow={3} stackable centered doubling>
                     {items.map((item) => (
                         <Card key={item.id} id={item.id} onClick={this.handleOrders} color='teal' >

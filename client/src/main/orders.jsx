@@ -6,7 +6,7 @@ import { Redirect } from 'react-router-dom';
 import Auth from '../utils/Auth';
 import Axios from 'axios';
 
-export default class MyOrders extends React.Component {
+export default class Orders extends React.Component {
     constructor() {
         super();
         this.state = {
